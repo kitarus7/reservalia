@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Reservalia</string>
+
+    <!-- Strings related to login -->
+    <string name="email">Email</string>
+    <string name="password">"Contraseña"</string>
+    <string name="action_sign_in">Conectar</string>
+    <string name="action_sign_in_short">Conectar</string>
+    <string name="action_sign_out">Desconectar</string>
+    <string name="action_create_user">Nuevo usuario</string>
+    <string name="welcome">"Bienvenid@ !"</string>
+    <string name="invalid_username">Usuario no válido</string>
+    <string name="invalid_password">Contraseña no válida</string>
+    <string name="login_failed">"Fallo al iniciar la sesión"</string>
+
+    <!--    FORMULARIO REGISTRO   -->
+    <string name="full_name">"Nombre completo"</string>
+    <string name="phone">"Teléfono"</string>
+    <string name="register">"Crear usuario"</string>
+
+    <!--    ROLES    -->
+    <string name="usuario">"USR"</string>
+    <string name="ADMIN">"ADM"</string>
+
+</resources>

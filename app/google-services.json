@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984399015031",
+    "project_id": "reservalia-9a32b",
+    "storage_bucket": "reservalia-9a32b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984399015031:android:46ce69e03600ae6781ea72",
+        "android_client_info": {
+          "package_name": "com.kitarsoft.reservalia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984399015031-muiqqtb8qhs2lhn2vt5ca5ut6bfmttia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgZogcQfEYtpxadN7k8u7x6UMvfN7IyLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984399015031-muiqqtb8qhs2lhn2vt5ca5ut6bfmttia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

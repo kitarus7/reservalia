@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#22AF8B</color>
+    <color name="colorPrimaryLight">#4AFFB5</color>
+
+    <color name="colorSecondary">#FFFFFFFF</color>
+
+    <color name="redirect_button">#001BFF</color>
+    <color name="regular_button">#3A3A3B</color>
+
+</resources>
