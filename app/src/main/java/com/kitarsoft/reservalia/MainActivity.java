@@ -1,41 +1,93 @@
 package com.kitarsoft.reservalia;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import com.kitarsoft.reservalia.ui.login.LoginActivity;
+public class MainActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity {
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
 
-    private TextView loggedUserTxt;
-    private Button disconnectBtn;
-
-    private String loggedUser="";
-
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initElements();
 
         Intent i = getIntent();
-        loggedUser = i.getStringExtra("loggedUser");
-
-        loggedUserTxt = (TextView)findViewById(R.id.loggedUser);
-        disconnectBtn = (Button) findViewById(R.id.disconnect);
-
-        loggedUserTxt.setText(loggedUser);
-        disconnectBtn.setOnClickListener(view -> disconnect());
-
     }
 
-    private void disconnect(){
-        loggedUser = "Guest";
-        loggedUserTxt.setText(loggedUser);
+    private void initElements() {
+        tabLayout = findViewById(R.id.tabLayout_main);
+        viewPager = findViewById(R.id.viewPager2_main);
 
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        //  Menú
+        tabLayout.addTab(tabLayout.newTab().setText("Reservar"), 0);
+        tabLayout.addTab(tabLayout.newTab().setText("Favoritos"), 1);
+        tabLayout.addTab(tabLayout.newTab().setText("Perfil"), 2);
+
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(MainActivity.this);
+        viewPager.setAdapter(pagerAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                if (position==0) tab.setText("Reservar");
+                if (position==1) tab.setText("Favoritos");
+                if (position==2) tab.setText("Perfil");
+            }
+        }).attach();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+
+        viewPager.setCurrentItem(0);
+        viewPager.setUserInputEnabled(false);
     }
+
+    class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        public ScreenSlidePagerAdapter(AppCompatActivity fa) {
+            super(fa);
+        }
+
+        @Override
+        public Fragment createFragment(int position) {
+            Fragment frag_new = null;
+            Bundle params = new Bundle();
+            params.putString("param1", "result1");
+            params.putString("param2", "result2");
+
+            if(position==0)frag_new= new MapsFragment();
+            if(position==1)frag_new= new Favoritos();
+            if(position==2)frag_new= new Perfil();
+
+            frag_new.setArguments(params);
+
+            return frag_new;
+        }
+
+        @Override
+        public int getItemCount() {
+            return 3;
+        }
+    }
+
 }
