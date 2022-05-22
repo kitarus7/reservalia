@@ -50,7 +50,16 @@ public class LoginActivity extends AppCompatActivity {
 
         String userLogged=null;
 
-        DBManager.readData(new User(), "Users", "email", userTxt.getText().toString(), new DBManager.ReadUsers() {
+        //      SALTARSE EL LOGING
+
+        Toast.makeText(LoginActivity.this, "Usuario correcto", Toast.LENGTH_SHORT).show();
+        Intent mainClassIntent = new Intent(LoginActivity.this, MainActivity.class);
+        mainClassIntent.putExtra("loggedUser", userTxt.getText().toString());
+        startActivity(mainClassIntent);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
+        /*DBManager.readData(new User(), "Users", "email", userTxt.getText().toString(), new DBManager.ReadUsers() {
             @Override
             public void onCallback(List<User> users) {
                 for(User user : users){
@@ -64,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        });*/
 
 
     }

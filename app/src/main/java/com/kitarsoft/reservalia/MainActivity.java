@@ -33,8 +33,11 @@ public class MainActivity extends AppCompatActivity{
 
         //  Menú
         tabLayout.addTab(tabLayout.newTab().setText("Reservar"), 0);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_book);
         tabLayout.addTab(tabLayout.newTab().setText("Favoritos"), 1);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_favorite);
         tabLayout.addTab(tabLayout.newTab().setText("Perfil"), 2);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_profile);
 
         FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(MainActivity.this);
         viewPager.setAdapter(pagerAdapter);
@@ -42,9 +45,18 @@ public class MainActivity extends AppCompatActivity{
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                if (position==0) tab.setText("Reservar");
-                if (position==1) tab.setText("Favoritos");
-                if (position==2) tab.setText("Perfil");
+                if (position==0) {
+                    tab.setText("Reservar");
+                    tab.setIcon(R.drawable.ic_book);
+                }
+                if (position==1) {
+                    tab.setText("Favoritos");
+                    tab.setIcon(R.drawable.ic_favorite);
+                }
+                if (position==2) {
+                    tab.setText("Perfil");
+                    tab.setIcon(R.drawable.ic_profile);
+                }
             }
         }).attach();
 
