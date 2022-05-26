@@ -5,4 +5,5 @@
 
     <dimen name="button_text">14dp</dimen>
     <dimen name="redirect_text">10dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

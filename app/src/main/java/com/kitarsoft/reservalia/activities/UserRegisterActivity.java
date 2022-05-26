@@ -1,6 +1,5 @@
-package com.kitarsoft.reservalia;
+package com.kitarsoft.reservalia.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
@@ -13,14 +12,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.database.DBManager;
 import com.kitarsoft.reservalia.models.User;
 import com.kitarsoft.reservalia.utils.Checker;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class UserRegister extends AppCompatActivity {
+public class UserRegisterActivity extends AppCompatActivity {
 
     private final String COLLECTION = "Users";
 
@@ -59,7 +56,7 @@ public class UserRegister extends AppCompatActivity {
 
             if(reference!=null){
                 //  Si tiene éxito
-                Toast.makeText(UserRegister.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserRegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
                 emailTxt.setText("");
                 passwordTxt.setText("");
                 phoneTxt.setText("");
@@ -67,10 +64,10 @@ public class UserRegister extends AppCompatActivity {
                 finish();
             }else{
                 //  Si no tiene éxito
-                Toast.makeText(UserRegister.this, "Error al crear el usuario", Toast.LENGTH_LONG).show();
+                Toast.makeText(UserRegisterActivity.this, "Error al crear el usuario", Toast.LENGTH_LONG).show();
             }
         }else{
-            Toast.makeText(UserRegister.this, "Por favor revise e introduzca todos los datos de manera correcta", Toast.LENGTH_LONG).show();
+            Toast.makeText(UserRegisterActivity.this, "Por favor revise e introduzca todos los datos de manera correcta", Toast.LENGTH_LONG).show();
         }
     }
 

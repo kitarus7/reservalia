@@ -2,12 +2,15 @@ package com.kitarsoft.reservalia.models;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 public class Place {
     private long id;
     private String name;
     private float rating;
     private float price;
     private LatLng position;
+    private List<Table> tables;
 
     public Place() {
     }
@@ -51,4 +54,13 @@ public class Place {
     public void setPosition(LatLng position) {
         this.position = position;
     }
+
+    public List<Table> getTables() {
+        return tables;
+    }
+
+    public void setTables(List<Table> tables) {
+        this.tables = tables;
+    }
+
 }

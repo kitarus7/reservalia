@@ -8,13 +8,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kitarsoft.reservalia.MainActivity;
+import com.kitarsoft.reservalia.activities.MainActivity;
 import com.kitarsoft.reservalia.R;
-import com.kitarsoft.reservalia.UserRegister;
-import com.kitarsoft.reservalia.database.DBManager;
-import com.kitarsoft.reservalia.models.User;
-
-import java.util.List;
+import com.kitarsoft.reservalia.activities.UserRegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginBtn.setOnClickListener(v -> login());
         createBtn.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, UserRegister.class));
+            startActivity(new Intent(LoginActivity.this, UserRegisterActivity.class));
         });
     }
 

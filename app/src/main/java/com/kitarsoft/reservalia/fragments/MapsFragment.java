@@ -1,4 +1,4 @@
-package com.kitarsoft.reservalia;
+package com.kitarsoft.reservalia.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,17 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -33,6 +31,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.kitarsoft.reservalia.R;
+import com.kitarsoft.reservalia.activities.EstablishmentActivity;
 import com.kitarsoft.reservalia.models.Place;
 import com.kitarsoft.reservalia.utils.Scale;
 
@@ -44,6 +44,8 @@ public class MapsFragment extends Fragment {
 
     private final float MAX_ZOOM = 10.5f;
     private final float MIN_ZOOM = 7.5f;
+
+    private float zoom = MAX_ZOOM;
 
     private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap googleMap;
@@ -65,7 +67,15 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap gmap) {
             googleMap = gmap;
             googleMap.setMyLocationEnabled(true);
-            getCurrentLocation();
+            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(@NonNull Marker marker) {
+                    Intent EstablishmentActivityIntent = new Intent(getActivity(), EstablishmentActivity.class);
+                    EstablishmentActivityIntent.putExtra("placeId", (String)marker.getTag());
+                    startActivity(EstablishmentActivityIntent);
+                }
+            });
+            getCurrentLocation(zoom);
             init();
         }
     };
@@ -102,7 +112,7 @@ public class MapsFragment extends Fragment {
         selectorRadio.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean userAction) {
-                float zoom = Scale.scaleValues(MAX_ZOOM,MIN_ZOOM, 10, 1, selectorRadio.getProgress());
+                zoom = Scale.scaleValues(MAX_ZOOM,MIN_ZOOM, 10, 1, selectorRadio.getProgress());
                 LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,zoom));
                 if(circle != null){
@@ -145,7 +155,7 @@ public class MapsFragment extends Fragment {
      * Refresca la ubicación actual y mueve la cámara hacia ella
      */
     @SuppressLint("MissingPermission")
-    private void getCurrentLocation(){
+    private void getCurrentLocation(float zoom){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener((Activity) context, new OnSuccessListener<Location>() {
@@ -154,7 +164,7 @@ public class MapsFragment extends Fragment {
                         if (location != null) {
                             currentLocation = location;
                             LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,MAX_ZOOM));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,zoom));
                             getNearbyMarkers(dummyMarkerData(), location,
                                     Float.parseFloat(String.valueOf(
                                             getSeekBarRoundedValue(selectorRadio.getProgress()))));
@@ -178,11 +188,12 @@ public class MapsFragment extends Fragment {
                     place.getPosition().latitude, place.getPosition().longitude, result);
             //  El radio viene dado en KMs el result es en m, por lo que se convierte a KMs
             if(result[0]<=radius*1000){
-                googleMap.addMarker(new MarkerOptions()
+                Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(place.getPosition().latitude, place.getPosition().longitude))
                         .title(place.getName())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
                         .snippet("Precio medio: " + place.getPrice() + "€ / Valoración: " + place.getRating()));
+                marker.setTag(String.valueOf(place.getId()));
             }
         }
     }
@@ -227,6 +238,7 @@ public class MapsFragment extends Fragment {
      */
     private void searchHere(Location location){
         googleMap.clear();
+        getCurrentLocation(zoom);
         Float newRadius = 10f;
         newRadius = Float.parseFloat(
                 String.valueOf(
