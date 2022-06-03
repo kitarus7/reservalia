@@ -64,6 +64,12 @@ public class MenuFragment extends Fragment {
         initElements(view);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        getFragmentManager().beginTransaction().remove(this).commit();
+    }
+
     private void initElements(View view) {
         dummyMenuData();
         for (MenuItem menuItem:dummyMenuItems) {
@@ -83,7 +89,7 @@ public class MenuFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(dummyMenuItems.get(position).getName());
+                tab.setText(dummyMenuItems.get(position).getCategorie());
             }
         }).attach();
 

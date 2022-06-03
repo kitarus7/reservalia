@@ -15,7 +15,8 @@
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_login.xml" value="0.3625" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_maps.xml" value="0.3625" />
-        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_book.xml" value="0.2975630611372381" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_book.xml" value="0.25" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_establishment_management.xml" value="0.2975630611372381" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_favoritos.xml" value="0.18541666666666667" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_gestion_locales.xml" value="0.18541666666666667" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_item.xml" value="0.33" />
@@ -24,8 +25,10 @@
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_maps.xml" value="0.22" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_menu.xml" value="0.2975630611372381" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_menu_.xml" value="0.17828131680205217" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_menu_management.xml" value="0.2975630611372381" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_menuitem.xml" value="0.2975630611372381" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_perfil.xml" value="0.18541666666666667" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_reservar_buscar.xml" value="0.22" />
       </map>
     </option>

@@ -3,9 +3,11 @@ package com.kitarsoft.reservalia.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +18,8 @@ import com.kitarsoft.reservalia.fragments.BookFragment;
 import com.kitarsoft.reservalia.fragments.FavoritesFragment;
 import com.kitarsoft.reservalia.fragments.MenuFragment;
 import com.kitarsoft.reservalia.fragments.ProfileFragment;
+
+import java.util.Arrays;
 
 public class EstablishmentActivity extends AppCompatActivity {
 
@@ -47,6 +51,14 @@ public class EstablishmentActivity extends AppCompatActivity {
 
         initElements();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        for(int i=0;i<menuFragments.length;i++){
+            menuFragments[i] = null;
+        }
     }
 
     private void initElements() {

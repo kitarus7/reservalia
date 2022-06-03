@@ -49,15 +49,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void initElements() {
-        tabLayout = findViewById(R.id.tabLayout_establishment);
-        viewPager = findViewById(R.id.viewPager2_establishment);
+        tabLayout = findViewById(R.id.tabLayout_main);
+        viewPager = findViewById(R.id.viewPager2_main);
 
         //  Menú
         for(int i = 0; i < menuSize;i++){
             tabLayout.addTab(tabLayout.newTab(), i);
         }
 
-        FragmentStateAdapter pagerAdapter = new EstablishmentActivity.ScreenSlidePagerAdapter(MainActivity.this);
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(MainActivity.this);
         viewPager.setAdapter(pagerAdapter);
 
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {

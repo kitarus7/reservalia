@@ -42,7 +42,6 @@ public class UserRegisterActivity extends AppCompatActivity {
     }
 
     private void create(){
-
         if(checkValidations()) {
 
             Task<DocumentReference> reference;
