@@ -39,13 +39,16 @@ public class MainActivity extends AppCompatActivity{
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
 
+    private static String userId;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initElements();
         Intent i = getIntent();
+        userId = i.getExtras().get("userId").toString();
+        initElements();
     }
 
     private void initElements() {
@@ -93,6 +96,11 @@ public class MainActivity extends AppCompatActivity{
         public Fragment createFragment(int position) {
             Fragment frag_new = null;
             frag_new = menuFragments[position];
+
+            Bundle args = new Bundle();
+            args.putString("userId", userId);
+            frag_new.setArguments(args);
+
             return frag_new;
         }
 

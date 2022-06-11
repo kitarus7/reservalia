@@ -2,59 +2,69 @@ package com.kitarsoft.reservalia.models;
 
 public class User {
 
-    private String id;
-    private String email;
-    private String password;
-    private String phone;
-    private boolean owner;
+    private String correo;
+    private String contrasenia;
+    private String nombre;
+    private String apellidos;
+    private String telefono;
+    private boolean esPropietario;
 
-    public User(String id, String email, String password, String phone, boolean owner) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.owner = owner;
+    public User(String correo, String contrasenia, String nombre, String apellidos, String telefono, boolean esPropietario) {
+        this.correo = correo;
+        this.contrasenia = contrasenia;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.esPropietario = esPropietario;
     }
 
     public User() {}
 
-    public String getId() {
-        return id;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getEmail() {
-        return email;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public boolean isOwner() {
-        return owner;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setOwner(boolean owner) {
-        this.owner = owner;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public boolean isEsPropietario() {
+        return esPropietario;
+    }
+
+    public void setEsPropietario(boolean esPropietario) {
+        this.esPropietario = esPropietario;
     }
 }

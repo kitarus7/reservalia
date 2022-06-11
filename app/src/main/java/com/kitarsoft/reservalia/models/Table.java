@@ -1,34 +1,41 @@
 package com.kitarsoft.reservalia.models;
 
 public class Table {
-    private int id;
-    private int size;
-    private boolean outside;
+    private String id;
+    private long tamaño;
+    private boolean terraza;
 
     public Table() {
     }
 
-    public int getId() {
+    public Table(String id, long tamaño, boolean terraza) {
+        this.id = id;
+        this.tamaño = tamaño;
+        this.terraza = terraza;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getSize() {
-        return size;
+    public long getTamaño() {
+        return tamaño;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setTamaño(long tamaño) {
+        this.tamaño = tamaño;
     }
 
-    public boolean isOutside() {
-        return outside;
+    public boolean isTerraza() {
+        return terraza;
     }
 
-    public void setOutside(boolean outside) {
-        this.outside = outside;
+    public void setTerraza(boolean terraza) {
+        this.terraza = terraza;
     }
+
 }

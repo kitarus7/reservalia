@@ -31,9 +31,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.GeoPoint;
 import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.activities.EstablishmentActivity;
-import com.kitarsoft.reservalia.models.Place;
+import com.kitarsoft.reservalia.models.Establishment;
 import com.kitarsoft.reservalia.utils.Scale;
 
 import java.util.ArrayList;
@@ -175,25 +176,25 @@ public class MapsFragment extends Fragment {
 
     /**
      * Muestra en el mapa los marcadores cercanos según un rádio
-     * @param places    Lista de lugares a verificar si están en rango
+     * @param establishments    Lista de lugares a verificar si están en rango
      * @param searchLocation    Localización desde la que buscar
      * @param radius    Radio máximo de búsqueda
      */
-    private void getNearbyMarkers(List<Place> places, Location searchLocation, float radius ){
-        for (Place place : places) {
+    private void getNearbyMarkers(List<Establishment> establishments, Location searchLocation, float radius ){
+        for (Establishment establishment : establishments) {
             float[] result = new float[1];
 
             Location.distanceBetween(
                     searchLocation.getLatitude(), searchLocation.getLongitude(),
-                    place.getPosition().latitude, place.getPosition().longitude, result);
+                    establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude(), result);
             //  El radio viene dado en KMs el result es en m, por lo que se convierte a KMs
             if(result[0]<=radius*1000){
                 Marker marker = googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(place.getPosition().latitude, place.getPosition().longitude))
-                        .title(place.getName())
+                        .position(new LatLng(establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude()))
+                        .title(establishment.getNombre())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
-                        .snippet("Precio medio: " + place.getPrice() + "€ / Valoración: " + place.getRating()));
-                marker.setTag(String.valueOf(place.getId()));
+                        .snippet("Precio medio: " + establishment.getPrecio() + "€ / Valoración: " + establishment.getPuntuacion()));
+                marker.setTag(establishment.getUserId());
             }
         }
     }
@@ -203,33 +204,33 @@ public class MapsFragment extends Fragment {
      *
      * @return
      */
-    private List<Place> dummyMarkerData(){
-        LatLng[] dummyLatLangs = {
-                new LatLng(43.43468212355435, -4.011860418191267),//  <10km
-                new LatLng(43.44178428605581, -4.022742262928622),//  <10km
-                new LatLng(43.47146733109299, -3.820208111560402),// <20km
-                new LatLng(43.46199869267057, -3.719614556439797), //   <30km
-                new LatLng(43.46374302578148, -3.4600624512940326),//   <50km
-                new LatLng(43.41064289102547, -3.3350929834991514),//  <60km
-                new LatLng(43.371473523809215, -3.2111534659233523),//  <70km
-                new LatLng(43.253063395460835, -3.1019768259618408),//  <80km
-                new LatLng(43.23505686466661, -2.867487412489577),//   <100km
-                new LatLng(41.67548651039684, 0.9108348399817848)// >100km
+    private List<Establishment> dummyMarkerData(){
+        GeoPoint[] dummyLatLangs = {
+                new GeoPoint(43.43468212355435, -4.011860418191267),//  <10km
+                new GeoPoint(43.44178428605581, -4.022742262928622),//  <10km
+                new GeoPoint(43.47146733109299, -3.820208111560402),// <20km
+                new GeoPoint(43.46199869267057, -3.719614556439797), //   <30km
+                new GeoPoint(43.46374302578148, -3.4600624512940326),//   <50km
+                new GeoPoint(43.41064289102547, -3.3350929834991514),//  <60km
+                new GeoPoint(43.371473523809215, -3.2111534659233523),//  <70km
+                new GeoPoint(43.253063395460835, -3.1019768259618408),//  <80km
+                new GeoPoint(43.23505686466661, -2.867487412489577),//   <100km
+                new GeoPoint(41.67548651039684, 0.9108348399817848)// >100km
         };
 
-        List<Place> dummyPlaces = new ArrayList<Place>();
+        List<Establishment> dummyEstablishments = new ArrayList<Establishment>();
 
         for(int i=0; i<10;i++){
-            Place place = new Place();
-            place.setId(i);
-            place.setName("Restaurante "+i);
-            place.setPrice(20.0f);
-            place.setRating(4.5f);
-            place.setPosition(dummyLatLangs[i]);
+            Establishment establishment = new Establishment();
+            establishment.setUserId("Local" + i);
+            establishment.setNombre("Restaurante "+i);
+            establishment.setPrecio(20.0f);
+            establishment.setPuntuacion(4.5f);
+            establishment.setPosicion(dummyLatLangs[i]);
 
-            dummyPlaces.add(place);
+            dummyEstablishments.add(establishment);
         }
-        return dummyPlaces;
+        return dummyEstablishments;
     }
 
     /**

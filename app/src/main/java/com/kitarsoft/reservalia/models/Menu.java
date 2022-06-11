@@ -3,8 +3,6 @@ package com.kitarsoft.reservalia.models;
 import java.util.List;
 
 public class Menu {
-    private long id;
-    private long establishmentId;
     private String name;
     private List<MenuItem> menuItems;
     private float menuPrice;
@@ -12,22 +10,6 @@ public class Menu {
     private String anotations;
 
     public Menu() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getEstablishmentId() {
-        return establishmentId;
-    }
-
-    public void setEstablishmentId(long establishmentId) {
-        this.establishmentId = establishmentId;
     }
 
     public String getName() {

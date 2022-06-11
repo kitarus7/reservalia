@@ -51,7 +51,7 @@
         android:id="@+id/btnLocalUbicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:alpha="0.8"
         android:background="@color/colorPrimaryLight"
@@ -80,7 +80,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:src="@android:drawable/ic_input_add"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelMesa"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelLocal"
         app:layout_constraintTop_toBottomOf="@+id/txtPosicionLocal" />
 
     <ImageButton
@@ -98,7 +98,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
         android:src="@android:drawable/ic_popup_sync"
-        app:layout_constraintStart_toEndOf="@+id/btnDelMesa"
+        app:layout_constraintStart_toEndOf="@+id/btnDelLocal"
         app:layout_constraintTop_toTopOf="@+id/btnAddLocal" />
 
     <TextView
@@ -109,7 +109,7 @@
         android:text="Puntuación"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/spnNumeroMesa"
+        app:layout_constraintStart_toEndOf="@+id/btnLocalUbicacion"
         app:layout_constraintTop_toTopOf="@+id/btnLocalUbicacion" />
 
     <TextView
@@ -144,113 +144,138 @@
         app:layout_constraintStart_toStartOf="@+id/txtPuntuacionLocal"
         app:layout_constraintTop_toTopOf="@+id/textView19"/>
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/formMesasManagement"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="MESAS"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddLocal" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAddLocal" >
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Nº mesa"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="MESAS"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Nº mesa"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Nº mesa"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <Spinner
-        android:id="@+id/spnNumeroMesa"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Nº mesa"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Tamaño"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/spnNumeroMesa"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <Spinner
+            android:id="@+id/spnNumeroMesa"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/txtNumeroMesa"
+            app:layout_constraintTop_toBottomOf="@+id/txtNumeroMesa" />
 
-    <TextView
-        android:id="@+id/txtTamanioMesa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="00"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <EditText
+            android:id="@+id/txtNumeroMesa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-10dp"
+            android:inputType="phone"
+            android:hint="00"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/textView13" />
 
-    <CheckBox
-        android:id="@+id/chbMesaExterior"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Terraza"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Tamaño"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/txtNumeroMesa"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <ImageButton
-        android:id="@+id/btnAddMesa"
-        android:layout_width="57dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelMesa"
-        app:layout_constraintTop_toBottomOf="@+id/chbMesaExterior" />
+        <EditText
+            android:id="@+id/txtTamanioMesa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="-10dp"
+            android:inputType="phone"
+            android:hint="00"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/textView14"
+            app:layout_constraintTop_toTopOf="@+id/textView14" />
 
-    <ImageButton
-        android:id="@+id/btnDelMesa"
-        android:layout_width="57dp"
-        android:layout_height="45dp"
-        android:src="@android:drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAddMesa" />
+        <CheckBox
+            android:id="@+id/chbMesaExterior"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:text="Terraza"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/txtTamanioMesa"
+            app:layout_constraintTop_toTopOf="@+id/txtTamanioMesa" />
 
-    <ImageButton
-        android:id="@+id/btnUpdMesa"
-        android:layout_width="57dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:src="@android:drawable/ic_popup_sync"
-        app:layout_constraintStart_toEndOf="@+id/btnDelMesa"
-        app:layout_constraintTop_toTopOf="@+id/btnAddMesa" />
+        <ImageButton
+            android:id="@+id/btnAddMesa"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:src="@android:drawable/ic_input_add"
+            app:layout_constraintEnd_toStartOf="@+id/btnDelMesa"
+            app:layout_constraintTop_toBottomOf="@+id/spnNumeroMesa" />
+
+        <ImageButton
+            android:id="@+id/btnDelMesa"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:src="@android:drawable/ic_delete"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnAddMesa" />
+
+        <ImageButton
+            android:id="@+id/btnUpdMesa"
+            android:layout_width="57dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="32dp"
+            android:src="@android:drawable/ic_popup_sync"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/btnDelMesa"
+            app:layout_constraintTop_toTopOf="@+id/btnAddMesa" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

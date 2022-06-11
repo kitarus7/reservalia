@@ -10,22 +10,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.kitarsoft.reservalia.R;
-import com.kitarsoft.reservalia.database.DBManager;
+import com.kitarsoft.reservalia.dao.UserDao;
 import com.kitarsoft.reservalia.models.User;
 import com.kitarsoft.reservalia.utils.Checker;
 
 public class UserRegisterActivity extends AppCompatActivity {
 
-    private final String COLLECTION = "Users";
-
-    private TextView emailTxt;
-    private TextView passwordTxt;
-    private TextView phoneTxt;
+    private TextView emailTxt, passwordTxt, nameTxt, surnameTxt, phoneTxt;
     private Switch ownerSwitch;
     private Button registerBtn;
+
+    private UserDao userDao = new UserDao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,43 +30,38 @@ public class UserRegisterActivity extends AppCompatActivity {
 
         emailTxt = (TextView)findViewById(R.id.usernameRegister);
         passwordTxt = (TextView)findViewById(R.id.passwordRegister);
+        nameTxt = (TextView)findViewById(R.id.nameRegister);
+        surnameTxt = (TextView)findViewById(R.id.surnameRegister);
         phoneTxt = (TextView)findViewById(R.id.phoneRegister);
         registerBtn = (Button)findViewById(R.id.createUser);
         ownerSwitch = (Switch)findViewById(R.id.ownerRegister);
 
-        registerBtn.setOnClickListener(v -> create());
+        registerBtn.setOnClickListener(v -> createNewUser());
     }
 
-    private void create(){
+    private void createNewUser(){
         if(checkValidations()) {
-
-            Task<DocumentReference> reference;
-
-            reference = DBManager.create(new User(
-                    null,
+            userDao.create(new User(
                     emailTxt.getText().toString(),
                     passwordTxt.getText().toString(),
+                    nameTxt.getText().toString(),
+                    surnameTxt.getText().toString(),
                     phoneTxt.getText().toString(),
-                    ownerSwitch.isChecked()), COLLECTION);
+                    ownerSwitch.isChecked()),
+                        emailTxt.getText().toString());
 
-            if(reference!=null){
-                //  Si tiene éxito
-                Toast.makeText(UserRegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
-                emailTxt.setText("");
-                passwordTxt.setText("");
-                phoneTxt.setText("");
-                ownerSwitch.setChecked(false);
-                finish();
-            }else{
-                //  Si no tiene éxito
-                Toast.makeText(UserRegisterActivity.this, "Error al crear el usuario", Toast.LENGTH_LONG).show();
-            }
+            Toast.makeText(UserRegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
+            emailTxt.setText("");
+            passwordTxt.setText("");
+            nameTxt.setText("");
+            surnameTxt.setText("");
+            phoneTxt.setText("");
+            ownerSwitch.setChecked(false);
+            finish();
         }else{
             Toast.makeText(UserRegisterActivity.this, "Por favor revise e introduzca todos los datos de manera correcta", Toast.LENGTH_LONG).show();
         }
     }
-
-
 
     private boolean checkValidations(){
 

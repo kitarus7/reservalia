@@ -25,4 +25,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="categorias_item_menu">
+        <item>Entrantes</item>
+        <item>Ensaladas</item>
+        <item>Bocadillos</item>
+        <item>Pizzas</item>
+        <item>Carnes</item>
+        <item>Pescados</item>
+        <item>Platos combinados</item>
+        <item>Postres</item>
+        <item>Cafés</item>
+        <item>Desayunos</item>
+        <item>Refrescos</item>
+        <item>Vinos</item>
+    </string-array>
+
 </resources>

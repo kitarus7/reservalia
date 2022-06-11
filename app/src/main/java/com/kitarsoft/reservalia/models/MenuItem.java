@@ -1,33 +1,41 @@
 package com.kitarsoft.reservalia.models;
 
 public class MenuItem {
-    private long id;
+    private String menuId;
     private boolean menu;
-    private String categorie;
-    private String name;
-    private String description;
-    private String anotation;   //  Ex: €/unidad ó /Kg
-    private float price;
+    private String categoria;
+    private String nombre;
+    private String descripcion;
+    private String observaciones;   //  Ex: €/unidad ó /Kg
+    private double precio;
 
     public MenuItem() {
     }
 
-    public MenuItem(long id, boolean menu, String categorie, String name, String description, String anotation, float price) {
-        this.id = id;
+    public MenuItem(String menuId, boolean menu, String categoria, String nombre, String descripcion, String observaciones, double precio) {
+        this.menuId = menuId;
         this.menu = menu;
-        this.categorie = categorie;
-        this.name = name;
-        this.description = description;
-        this.anotation = anotation;
-        this.price = price;
+        this.categoria = categoria;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.observaciones = observaciones;
+        this.precio = precio;
     }
 
-    public long getId() {
-        return id;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 
     public boolean isMenu() {
@@ -38,36 +46,36 @@ public class MenuItem {
         this.menu = menu;
     }
 
-    public String getCategorie() {
-        return categorie;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public float getPrice() {
-        return price;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
 

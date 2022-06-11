@@ -32,7 +32,6 @@ public class PlaceholderContent {
 
     static{
         // private void dummyMenuData(){
-        dummyMenu.setId(0);
         dummyMenu.setName("Menú de prueba");
         dummyMenu.setMenuDays("Lunes - Viernes");
         dummyMenu.setAnotations("Viernes noche no hay menú");
@@ -41,7 +40,7 @@ public class PlaceholderContent {
         List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
 
         for(int i = 0; i < 10; i++){
-            dummyMenuItems.add(new MenuItem(i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
+            dummyMenuItems.add(new MenuItem("id"+i,false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
         }
         dummyMenu.setMenuItems(dummyMenuItems);
         // }
@@ -56,30 +55,27 @@ public class PlaceholderContent {
     }
     private static void addItem(PlaceholderItem item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        ITEM_MAP.put(item.itemName, item);
     }
 
     private static PlaceholderItem createPlaceholderItem(int position) {
         return new PlaceholderItem(
-                String.valueOf(dummyMenu.getId()),
                 dummyMenu.getName(),
-                dummyMenu.getMenuItems().get(position-1).getCategorie(),
-                dummyMenu.getMenuItems().get(position-1).getName(),
-                dummyMenu.getMenuItems().get(position-1).getDescription(),
-                String.valueOf(dummyMenu.getMenuItems().get(position-1).getPrice())
+                dummyMenu.getMenuItems().get(position-1).getCategoria(),
+                dummyMenu.getMenuItems().get(position-1).getNombre(),
+                dummyMenu.getMenuItems().get(position-1).getDescripcion(),
+                String.valueOf(dummyMenu.getMenuItems().get(position-1).getPrecio())
         );
     }
 
     public static class PlaceholderItem {
-        public final String id;
         public final String menuName;
         public final String category;
         public final String itemName;
         public final String itemDescription;
         public final String itemPrice;
 
-        public PlaceholderItem(String id, String menuName, String category, String itemName, String itemDescription, String itemPrice) {
-            this.id = id;
+        public PlaceholderItem(String menuName, String category, String itemName, String itemDescription, String itemPrice) {
             this.menuName = menuName;
             this.category = category;
             this.itemName = itemName;

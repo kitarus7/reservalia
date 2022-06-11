@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,10 +42,14 @@ public class EstablishmentManagementActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
 
+    private static String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_establishment_management);
+        Intent i = getIntent();
+        userId = i.getExtras().get("userId").toString();
         initElements();
     }
 
@@ -95,6 +100,11 @@ public class EstablishmentManagementActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             Fragment frag_new = null;
             frag_new = menuFragments[position];
+
+            Bundle args = new Bundle();
+            args.putString("userId", userId);
+            frag_new.setArguments(args);
+
             return frag_new;
         }
 

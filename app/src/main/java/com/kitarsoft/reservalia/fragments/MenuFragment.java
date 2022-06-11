@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kitarsoft.reservalia.R;
-import com.kitarsoft.reservalia.models.Menu;
 import com.kitarsoft.reservalia.models.MenuItem;
 
 import java.util.ArrayList;
@@ -89,7 +88,7 @@ public class MenuFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(dummyMenuItems.get(position).getCategorie());
+                tab.setText(dummyMenuItems.get(position).getCategoria());
             }
         }).attach();
 
@@ -138,7 +137,7 @@ public class MenuFragment extends Fragment {
 //        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
 
         for(int i = 0; i < 5; i++){
-            dummyMenuItems.add(new MenuItem(i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
+            dummyMenuItems.add(new MenuItem("id"+i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
         }
         //dummyMenu.setMenuItems(dummyMenuItems);
      }

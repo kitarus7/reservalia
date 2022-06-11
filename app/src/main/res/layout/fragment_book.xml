@@ -117,7 +117,7 @@
         android:id="@+id/txtNumComensales"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:inputType="number"
         android:text="00"
         android:textAlignment="center"
@@ -142,6 +142,17 @@
         android:src="@android:drawable/ic_media_rew"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="@+id/txtNumComensales" />
+
+    <CheckBox
+        android:id="@+id/chbMesaExteriorReserva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Terraza"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubComensal" />
 
     <Button
         android:id="@+id/btnReservar"
