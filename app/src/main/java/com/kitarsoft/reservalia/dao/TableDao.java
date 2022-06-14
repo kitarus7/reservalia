@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +36,7 @@ public class TableDao {
         });
     }
 
-    public void getTables(String establishmentId, String queryParam, String queryFilter, ReadTables myCallback){
+    public void getTables(String establishmentId, String queryParam, Object queryFilter, ReadTables myCallback){
 
         List<Table> results = new ArrayList();
 

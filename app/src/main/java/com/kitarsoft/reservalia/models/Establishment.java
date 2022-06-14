@@ -9,14 +9,14 @@ public class Establishment {
     private String userId;
     private String nombre;
     private String telefono;
-    private float puntuacion;
-    private float precio;
+    private double puntuacion;
+    private double precio;
     private GeoPoint posicion;
 
     public Establishment() {
     }
 
-    public Establishment(String userId, String nombre, String telefono, float puntuacion, float precio, GeoPoint posicion) {
+    public Establishment(String userId, String nombre, String telefono, double puntuacion, double precio, GeoPoint posicion) {
         this.userId = userId;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -49,19 +49,19 @@ public class Establishment {
         this.telefono = telefono;
     }
 
-    public float getPuntuacion() {
+    public double getPuntuacion() {
         return puntuacion;
     }
 
-    public void setPuntuacion(float puntuacion) {
+    public void setPuntuacion(double puntuacion) {
         this.puntuacion = puntuacion;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

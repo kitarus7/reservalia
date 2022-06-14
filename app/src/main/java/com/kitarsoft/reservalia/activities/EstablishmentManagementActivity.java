@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.fragments.BookFragment;
+import com.kitarsoft.reservalia.fragments.BookingsFragment;
 import com.kitarsoft.reservalia.fragments.EstablishmentManagementFragment;
 import com.kitarsoft.reservalia.fragments.MenuFragment;
 import com.kitarsoft.reservalia.fragments.MenuManagementFragment;
@@ -25,18 +26,16 @@ import com.kitarsoft.reservalia.fragments.MenuManagementFragment;
 public class EstablishmentManagementActivity extends AppCompatActivity {
 
     //  Menú config (Se debe seguir el orden del menú)
-    private final static int menuSize = 2;
+    private final static int menuSize = 3;
     private final String[] menuOptions = {
-            //"Local", "Carta", "Reservas"
-            "Local", "Carta"
+            "Local", "Carta", "Reservas"
     };
     private final int[] menuIcons = {
-            R.drawable.ic_menu, R.drawable.ic_dishes
+            R.drawable.ic_menu, R.drawable.ic_dishes, R.drawable.ic_book
     };
 
     private final static Fragment[] menuFragments = {
-            //new MenuFragment(), new FavoritesFragment(), new ProfileFragment(), new BookFragment()
-            new EstablishmentManagementFragment(), new MenuManagementFragment()
+            new EstablishmentManagementFragment(), new MenuManagementFragment(), new BookingsFragment()
     };
 
     private TabLayout tabLayout;

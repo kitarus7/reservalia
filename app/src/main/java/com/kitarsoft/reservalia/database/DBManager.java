@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -108,71 +109,11 @@ public class DBManager {
                 });
     }
 
-//    public static Task<DocumentReference> create(Object obj, String collectionName){
-//
-//        Task<DocumentReference> reference;
-//
-//        reference = db.collection(collectionName)
-//                .add(obj)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d("[DBM]", "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w("[DBM]", "Error adding document", e);
-//                    }
-//                });
-//        return reference;
-//    }
+    public static CollectionReference getCollectionReference(String collectionName){
+        return db.collection(collectionName);
+    }
 
-//    public static void getUsers(Object obj, String collectionPath, String queryParam, String queryFilter, ReadUsers myCallback) {
-//
-//        List results = new ArrayList();
-//
-//        if(queryParam != null && queryParam.isEmpty()){
-//            db.collection(collectionPath)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d("[DBM]", document.getId() + " => " + document.getData());
-//                                results.add(document.toObject(obj.getClass()));
-//                            }
-//                        } else {
-//                            Log.w("[DBM]", "Error getting documents.", task.getException());
-//                        }
-//                        myCallback.onCallback(results);
-//                    }
-//                });
-//        }else{
-//            db.collection(collectionPath)
-//                .whereEqualTo(queryParam, queryFilter)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d("[DBM]", document.getId() + " => " + document.getData());
-//                                results.add(document.toObject(obj.getClass()));
-//                            }
-//                        } else {
-//                            Log.w("[DBM]", "Error getting documents.", task.getException());
-//                        }
-//                        myCallback.onCallback(results);
-//                    }
-//                });
-//        }
-//    }
-
-//    public interface ReadUsers {
-//        void onCallback(List<User> results);
-//    }
-
+    public static CollectionReference getSubCollectionReference(String collectionName, String documentName, String subCollectionName){
+        return db.collection(collectionName).document(documentName).collection(subCollectionName);
+    }
 }

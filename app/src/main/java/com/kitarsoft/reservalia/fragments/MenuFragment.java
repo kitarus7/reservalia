@@ -16,19 +16,25 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kitarsoft.reservalia.R;
+import com.kitarsoft.reservalia.dao.EstablishmentDao;
+import com.kitarsoft.reservalia.dao.MenuItemDao;
+import com.kitarsoft.reservalia.models.Establishment;
 import com.kitarsoft.reservalia.models.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MenuFragment extends Fragment {
 
-    List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
+    private String userId;
+    private static final String USER_ID = "userId";
+
+    private EstablishmentDao establishmentDao = new EstablishmentDao();
+    private MenuItemDao menuItemDao = new MenuItemDao();
+    private List<Establishment> listaLocales;
+
+//    List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
+    List<MenuItem> listaMenuItems = new ArrayList<MenuItem>();
 
     //  Menú config (Se debe seguir el orden del menú)
     List<Fragment> menuFragments = new ArrayList<Fragment>();
@@ -48,6 +54,10 @@ public class MenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            userId = getArguments().getString(USER_ID);
+        }
+        getEstablishmentMenuData();
     }
 
     @Override
@@ -60,7 +70,7 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initElements(view);
+//        initElements(view);
     }
 
     @Override
@@ -70,15 +80,15 @@ public class MenuFragment extends Fragment {
     }
 
     private void initElements(View view) {
-        dummyMenuData();
-        for (MenuItem menuItem:dummyMenuItems) {
-            menuFragments.add(new MenuItemFragment());
+//        dummyMenuData();
+        for (MenuItem menuItem:listaMenuItems) {
+            menuFragments.add(new MenuItemFragment(listaMenuItems));
         }
         tabLayout = (TabLayout)view.findViewById(R.id.tabLayout_menu);
         viewPager = (ViewPager2)view.findViewById(R.id.viewPager2_menu);
 
-        //  Menú
-        for(int i = 0; i < dummyMenuItems.size();i++){
+        //  Carta según categorías
+        for(int i = 0; i < listaMenuItems.size();i++){
             tabLayout.addTab(tabLayout.newTab(), i);
         }
 
@@ -88,7 +98,7 @@ public class MenuFragment extends Fragment {
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(dummyMenuItems.get(position).getCategoria());
+                tab.setText(listaMenuItems.get(position).getCategoria());
             }
         }).attach();
 
@@ -108,6 +118,16 @@ public class MenuFragment extends Fragment {
         viewPager.setUserInputEnabled(false);
     }
 
+    private void getEstablishmentMenuData(){
+        menuItemDao.getMenuItems(userId, null, null, new MenuItemDao.ReadMenuItems() {
+            @Override
+            public void onCallback(List<MenuItem> results) {
+                listaMenuItems = results;
+                initElements(getView());
+            }
+        });
+    }
+
     class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         public ScreenSlidePagerAdapter(AppCompatActivity fa) {
             super(fa);
@@ -122,23 +142,24 @@ public class MenuFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return dummyMenuItems.size();
+            return listaMenuItems.size();
         }
     }
 
-     private void dummyMenuData(){
 
-        /*dummyMenu.setId(0);
-        dummyMenu.setName("Menú de prueba");
-        dummyMenu.setMenuDays("Lunes - Viernes");
-        dummyMenu.setAnotations("Viernes noche no hay menú");
-        dummyMenu.setMenuPrice(16.5f);*/
-
-//        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
-
-        for(int i = 0; i < 5; i++){
-            dummyMenuItems.add(new MenuItem("id"+i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
-        }
-        //dummyMenu.setMenuItems(dummyMenuItems);
-     }
+//     private void dummyMenuData(){
+//
+//        /*dummyMenu.setId(0);
+//        dummyMenu.setName("Menú de prueba");
+//        dummyMenu.setMenuDays("Lunes - Viernes");
+//        dummyMenu.setAnotations("Viernes noche no hay menú");
+//        dummyMenu.setMenuPrice(16.5f);*/
+//
+////        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
+//
+//        for(int i = 0; i < 5; i++){
+//            dummyMenuItems.add(new MenuItem("id"+i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
+//        }
+//        //dummyMenu.setMenuItems(dummyMenuItems);
+//     }
 }

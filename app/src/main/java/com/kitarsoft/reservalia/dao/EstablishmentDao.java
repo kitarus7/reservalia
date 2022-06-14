@@ -51,8 +51,8 @@ public class EstablishmentDao {
                                         document.getId(),
                                         (String)document.get("nombre"),
                                         (String)document.get("telefono"),
-                                        (float)document.get("puntuacion"),
-                                        (float)document.get("precio"),
+                                        (double)document.get("puntuacion"),
+                                        (double)document.get("precio"),
                                         (GeoPoint) document.get("posicion")));
                             }
                         } else {

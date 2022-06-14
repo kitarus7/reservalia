@@ -8,12 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- * <p>
- * TODO: Replace all uses of this class before publishing your app.
- */
 public class PlaceholderContent {
 
     /**
@@ -26,33 +20,39 @@ public class PlaceholderContent {
      */
     public static final Map<String, PlaceholderItem> ITEM_MAP = new HashMap<String, PlaceholderItem>();
 
-    private static final int COUNT = 10;
+    private static Menu menu = new Menu();
 
-    private static Menu dummyMenu = new Menu();
+//    static{
+//        // private void dummyMenuData(){
+//        dummyMenu.setName("Menú de prueba");
+//        dummyMenu.setMenuDays("Lunes - Viernes");
+//        dummyMenu.setAnotations("Viernes noche no hay menú");
+//        dummyMenu.setMenuPrice(16.5f);
+//
+//        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
+//
+//        for(int i = 0; i < 10; i++){
+//            dummyMenuItems.add(new MenuItem("id"+i,false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
+//        }
+//        dummyMenu.setMenuItems(dummyMenuItems);
+//        // }
+//    }
 
-    static{
-        // private void dummyMenuData(){
-        dummyMenu.setName("Menú de prueba");
-        dummyMenu.setMenuDays("Lunes - Viernes");
-        dummyMenu.setAnotations("Viernes noche no hay menú");
-        dummyMenu.setMenuPrice(16.5f);
-
-        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
-
-        for(int i = 0; i < 10; i++){
-            dummyMenuItems.add(new MenuItem("id"+i,false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
-        }
-        dummyMenu.setMenuItems(dummyMenuItems);
-        // }
-    }
-
-    static {
-        // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
+    public static List<PlaceholderItem> getPlaceHolderItems(List<MenuItem>listaMenuItems){
+        menu.setMenuItems(listaMenuItems);
+        for (int i = 0; i < listaMenuItems.size(); i++) {
             addItem(createPlaceholderItem(i));
         }
-
+        return ITEMS;
     }
+
+//    static {
+//        // Add some sample items.
+//        for (int i = 1; i <= COUNT; i++) {
+//            addItem(createPlaceholderItem(i));
+//        }
+//    }
+
     private static void addItem(PlaceholderItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.itemName, item);
@@ -60,11 +60,11 @@ public class PlaceholderContent {
 
     private static PlaceholderItem createPlaceholderItem(int position) {
         return new PlaceholderItem(
-                dummyMenu.getName(),
-                dummyMenu.getMenuItems().get(position-1).getCategoria(),
-                dummyMenu.getMenuItems().get(position-1).getNombre(),
-                dummyMenu.getMenuItems().get(position-1).getDescripcion(),
-                String.valueOf(dummyMenu.getMenuItems().get(position-1).getPrecio())
+                menu.getName(),
+                menu.getMenuItems().get(position).getCategoria(),
+                menu.getMenuItems().get(position).getNombre(),
+                menu.getMenuItems().get(position).getDescripcion(),
+                String.valueOf(menu.getMenuItems().get(position).getPrecio())
         );
     }
 

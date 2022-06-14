@@ -12,28 +12,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kitarsoft.reservalia.models.MenuItem;
 import com.kitarsoft.reservalia.utils.MyMenuItemRecyclerViewAdapter;
 import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.fragments.placeholder.PlaceholderContent;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
  */
 public class MenuItemFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public MenuItemFragment() {
+    private List<MenuItem>listaMenuItems;
+
+    public MenuItemFragment() {}
+
+    public MenuItemFragment(List<MenuItem>listaMenuItems) {
+        this.listaMenuItems = listaMenuItems;
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static MenuItemFragment newInstance(int columnCount) {
         MenuItemFragment fragment = new MenuItemFragment();
@@ -66,7 +67,7 @@ public class MenuItemFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMenuItemRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            recyclerView.setAdapter(new MyMenuItemRecyclerViewAdapter(PlaceholderContent.getPlaceHolderItems(listaMenuItems)));
         }
         return view;
     }

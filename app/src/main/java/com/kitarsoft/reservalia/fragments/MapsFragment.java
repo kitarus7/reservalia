@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.GeoPoint;
 import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.activities.EstablishmentActivity;
+import com.kitarsoft.reservalia.dao.EstablishmentDao;
 import com.kitarsoft.reservalia.models.Establishment;
 import com.kitarsoft.reservalia.utils.Scale;
 
@@ -58,6 +59,12 @@ public class MapsFragment extends Fragment {
     private SeekBar selectorRadio;
     private TextView valorRadio;
 
+    private String userId;
+    private static final String USER_ID = "userId";
+
+    private EstablishmentDao establishmentDao = new EstablishmentDao();
+    private List<Establishment> listaLocales;
+
     /**
      * Función que se llama al tener el mapa listo
      */
@@ -72,7 +79,7 @@ public class MapsFragment extends Fragment {
                 @Override
                 public void onInfoWindowClick(@NonNull Marker marker) {
                     Intent EstablishmentActivityIntent = new Intent(getActivity(), EstablishmentActivity.class);
-                    EstablishmentActivityIntent.putExtra("placeId", (String)marker.getTag());
+                    EstablishmentActivityIntent.putExtra("userId", userId);
                     startActivity(EstablishmentActivityIntent);
                 }
             });
@@ -87,6 +94,9 @@ public class MapsFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         context = getActivity();
+        if (getArguments() != null) {
+            userId = getArguments().getString(USER_ID);
+        }
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -98,6 +108,7 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+        getEstablishmentsData();
     }
 
     /**
@@ -120,7 +131,6 @@ public class MapsFragment extends Fragment {
                     circle.remove();
                 }
                 showRadiusInMap(currentLatLng);
-
                 valorRadio.setText("Buscar a " + getSeekBarRoundedValue(progress) + " km de la posición");
             }
 
@@ -166,7 +176,7 @@ public class MapsFragment extends Fragment {
                             currentLocation = location;
                             LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,zoom));
-                            getNearbyMarkers(dummyMarkerData(), location,
+                            getNearbyMarkers(/*dummyMarkerData()*/listaLocales, location,
                                     Float.parseFloat(String.valueOf(
                                             getSeekBarRoundedValue(selectorRadio.getProgress()))));
                         }
@@ -192,46 +202,55 @@ public class MapsFragment extends Fragment {
                 Marker marker = googleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude()))
                         .title(establishment.getNombre())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
-                        .snippet("Precio medio: " + establishment.getPrecio() + "€ / Valoración: " + establishment.getPuntuacion()));
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                        //.snippet("Precio medio: " + establishment.getPrecio() + "€ / Valoración: " + establishment.getPuntuacion()));
                 marker.setTag(establishment.getUserId());
             }
         }
     }
 
-    /**
-     * Datos de prueba en local
-     *
-     * @return
-     */
-    private List<Establishment> dummyMarkerData(){
-        GeoPoint[] dummyLatLangs = {
-                new GeoPoint(43.43468212355435, -4.011860418191267),//  <10km
-                new GeoPoint(43.44178428605581, -4.022742262928622),//  <10km
-                new GeoPoint(43.47146733109299, -3.820208111560402),// <20km
-                new GeoPoint(43.46199869267057, -3.719614556439797), //   <30km
-                new GeoPoint(43.46374302578148, -3.4600624512940326),//   <50km
-                new GeoPoint(43.41064289102547, -3.3350929834991514),//  <60km
-                new GeoPoint(43.371473523809215, -3.2111534659233523),//  <70km
-                new GeoPoint(43.253063395460835, -3.1019768259618408),//  <80km
-                new GeoPoint(43.23505686466661, -2.867487412489577),//   <100km
-                new GeoPoint(41.67548651039684, 0.9108348399817848)// >100km
-        };
-
-        List<Establishment> dummyEstablishments = new ArrayList<Establishment>();
-
-        for(int i=0; i<10;i++){
-            Establishment establishment = new Establishment();
-            establishment.setUserId("Local" + i);
-            establishment.setNombre("Restaurante "+i);
-            establishment.setPrecio(20.0f);
-            establishment.setPuntuacion(4.5f);
-            establishment.setPosicion(dummyLatLangs[i]);
-
-            dummyEstablishments.add(establishment);
-        }
-        return dummyEstablishments;
+    private void getEstablishmentsData(){
+        establishmentDao.getEstablishments(null, null, new EstablishmentDao.ReadEstablishments() {
+            @Override
+            public void onCallback(List<Establishment> results) {
+                listaLocales = results;
+            }
+        });
     }
+
+//    /**
+//     * Datos de prueba en local
+//     *
+//     * @return
+//     */
+//    private List<Establishment> dummyMarkerData(){
+//        GeoPoint[] dummyLatLangs = {
+//                new GeoPoint(43.43468212355435, -4.011860418191267),//  <10km
+//                new GeoPoint(43.44178428605581, -4.022742262928622),//  <10km
+//                new GeoPoint(43.47146733109299, -3.820208111560402),// <20km
+//                new GeoPoint(43.46199869267057, -3.719614556439797), //   <30km
+//                new GeoPoint(43.46374302578148, -3.4600624512940326),//   <50km
+//                new GeoPoint(43.41064289102547, -3.3350929834991514),//  <60km
+//                new GeoPoint(43.371473523809215, -3.2111534659233523),//  <70km
+//                new GeoPoint(43.253063395460835, -3.1019768259618408),//  <80km
+//                new GeoPoint(43.23505686466661, -2.867487412489577),//   <100km
+//                new GeoPoint(41.67548651039684, 0.9108348399817848)// >100km
+//        };
+//
+//        List<Establishment> dummyEstablishments = new ArrayList<Establishment>();
+//
+//        for(int i=0; i<10;i++){
+//            Establishment establishment = new Establishment();
+//            establishment.setUserId("Local" + i);
+//            establishment.setNombre("Restaurante "+i);
+//            establishment.setPrecio(20.0f);
+//            establishment.setPuntuacion(4.5f);
+//            establishment.setPosicion(dummyLatLangs[i]);
+//
+//            dummyEstablishments.add(establishment);
+//        }
+//        return dummyEstablishments;
+//    }
 
     /**
      * Refresca los marcadores según el rádio que le indicamos
@@ -244,7 +263,8 @@ public class MapsFragment extends Fragment {
         newRadius = Float.parseFloat(
                 String.valueOf(
                         getSeekBarRoundedValue(selectorRadio.getProgress())));
-        getNearbyMarkers(dummyMarkerData(), location, newRadius);
+        //getNearbyMarkers(dummyMarkerData(), location, newRadius);
+        getNearbyMarkers(listaLocales, location, newRadius);
         showRadiusInMap(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
     }
 

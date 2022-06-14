@@ -35,8 +35,8 @@ import java.util.List;
 public class MenuManagementFragment extends Fragment {
 
     private String userId;
-
     private static final String USER_ID = "userId";
+
     private EstablishmentDao establishmentDao = new EstablishmentDao();
     private MenuItemDao menuItemDao = new MenuItemDao();
 
