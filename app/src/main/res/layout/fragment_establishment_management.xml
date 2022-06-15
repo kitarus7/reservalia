@@ -51,26 +51,39 @@
         android:id="@+id/btnLocalUbicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:alpha="0.8"
         android:background="@color/colorPrimaryLight"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="Localizar local"
+        android:visibility="invisible"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTelefonoLocal" />
+
+    <CheckBox
+        android:id="@+id/chbCambiarUbicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Establecer ubicación actual"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLocalUbicacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnLocalUbicacion"
+        app:layout_constraintTop_toTopOf="@+id/btnLocalUbicacion" />
 
     <TextView
         android:id="@+id/txtPosicionLocal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Sin ubicación"
+        android:text="SIN UBICACIÓN"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/btnLocalUbicacion"
+        app:layout_constraintEnd_toEndOf="@+id/chbCambiarUbicacion"
+        app:layout_constraintStart_toStartOf="@+id/chbCambiarUbicacion"
         app:layout_constraintTop_toBottomOf="@+id/btnLocalUbicacion" />
 
     <ImageButton
@@ -100,49 +113,6 @@
         android:src="@android:drawable/ic_popup_sync"
         app:layout_constraintStart_toEndOf="@+id/btnDelLocal"
         app:layout_constraintTop_toTopOf="@+id/btnAddLocal" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Puntuación"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/btnLocalUbicacion"
-        app:layout_constraintTop_toTopOf="@+id/btnLocalUbicacion" />
-
-    <TextView
-        android:id="@+id/txtPuntuacionLocal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="00"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toTopOf="@+id/textView18"/>
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Precio"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-    <TextView
-        android:id="@+id/txtPrecioLocal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/txtPuntuacionLocal"
-        app:layout_constraintTop_toTopOf="@+id/textView19"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/formMesasManagement"

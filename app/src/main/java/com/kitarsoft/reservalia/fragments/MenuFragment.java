@@ -1,11 +1,13 @@
 package com.kitarsoft.reservalia.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -22,6 +24,7 @@ import com.kitarsoft.reservalia.models.Establishment;
 import com.kitarsoft.reservalia.models.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MenuFragment extends Fragment {
@@ -33,8 +36,14 @@ public class MenuFragment extends Fragment {
     private MenuItemDao menuItemDao = new MenuItemDao();
     private List<Establishment> listaLocales;
 
+    private Activity parentActivity;
+
+    private RecyclerView menuRecyclerview;
+    private RecyclerView.Adapter mAdapter;
+
 //    List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
     List<MenuItem> listaMenuItems = new ArrayList<MenuItem>();
+    List<String> listaCategorias = new ArrayList<>();
 
     //  Menú config (Se debe seguir el orden del menú)
     List<Fragment> menuFragments = new ArrayList<Fragment>();
@@ -44,6 +53,10 @@ public class MenuFragment extends Fragment {
 
     public MenuFragment() {
         // Required empty public constructor
+    }
+
+    public MenuFragment(Activity parent) {
+        this.parentActivity = parent;
     }
 
     public static MenuFragment newInstance() {
@@ -57,6 +70,7 @@ public class MenuFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getString(USER_ID);
         }
+        listaCategorias.clear();
         getEstablishmentMenuData();
     }
 
@@ -70,35 +84,50 @@ public class MenuFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initElements(view);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getFragmentManager().beginTransaction().remove(this).commit();
     }
 
     private void initElements(View view) {
-//        dummyMenuData();
+        menuFragments.clear();
+        //  Crear una lista de categorias
         for (MenuItem menuItem:listaMenuItems) {
-            menuFragments.add(new MenuItemFragment(listaMenuItems));
+            if(Collections.frequency(listaCategorias, menuItem.getCategoria())<=0){
+                listaCategorias.add(menuItem.getCategoria());
+            }
         }
+
+        //  Filtra los items por cada categoría y se los pasa al fragmento
+        for (String categoria : listaCategorias) {
+            List<MenuItem> listaItemsCategoria = new ArrayList<>();
+            for (MenuItem menuItem:listaMenuItems) {
+                if(menuItem.getCategoria().equals(categoria)){
+                    listaItemsCategoria.add(menuItem);
+                }
+            }
+            menuFragments.add(new MenuItemFragment(listaItemsCategoria));
+        }
+
         tabLayout = (TabLayout)view.findViewById(R.id.tabLayout_menu);
         viewPager = (ViewPager2)view.findViewById(R.id.viewPager2_menu);
 
-        //  Carta según categorías
-        for(int i = 0; i < listaMenuItems.size();i++){
+        //  Añade una pestaña al tablayout por cada categoría
+        for(int i = 0; i < listaCategorias.size();i++){
             tabLayout.addTab(tabLayout.newTab(), i);
         }
 
-        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter((AppCompatActivity) getActivity());
-        viewPager.setAdapter(pagerAdapter);
+//        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter((AppCompatActivity) getActivity());
+        //viewPager.setAdapter(pagerAdapter);
+        try{
+            viewPager.setAdapter(new ScreenSlidePagerAdapter((AppCompatActivity) getActivity()));
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
 
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(listaMenuItems.get(position).getCategoria());
+                //  Pone el nombre de los menús del tablayout
+                tab.setText(listaCategorias.get(position));
             }
         }).attach();
 
@@ -142,24 +171,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return listaMenuItems.size();
+            return listaCategorias.size();
         }
     }
-
-
-//     private void dummyMenuData(){
-//
-//        /*dummyMenu.setId(0);
-//        dummyMenu.setName("Menú de prueba");
-//        dummyMenu.setMenuDays("Lunes - Viernes");
-//        dummyMenu.setAnotations("Viernes noche no hay menú");
-//        dummyMenu.setMenuPrice(16.5f);*/
-//
-////        List<MenuItem> dummyMenuItems = new ArrayList<MenuItem>();
-//
-//        for(int i = 0; i < 5; i++){
-//            dummyMenuItems.add(new MenuItem("id"+i, false, "Categorie "+i, "Item "+i, "Dummy item", "It's only a dummy menú item", 8.75f));
-//        }
-//        //dummyMenu.setMenuItems(dummyMenuItems);
-//     }
 }

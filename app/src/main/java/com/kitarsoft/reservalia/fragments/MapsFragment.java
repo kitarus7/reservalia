@@ -79,7 +79,7 @@ public class MapsFragment extends Fragment {
                 @Override
                 public void onInfoWindowClick(@NonNull Marker marker) {
                     Intent EstablishmentActivityIntent = new Intent(getActivity(), EstablishmentActivity.class);
-                    EstablishmentActivityIntent.putExtra("userId", userId);
+                    EstablishmentActivityIntent.putExtra("userId", marker.getTag().toString());
                     startActivity(EstablishmentActivityIntent);
                 }
             });
@@ -108,6 +108,12 @@ public class MapsFragment extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+        getEstablishmentsData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getEstablishmentsData();
     }
 
@@ -176,7 +182,7 @@ public class MapsFragment extends Fragment {
                             currentLocation = location;
                             LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng,zoom));
-                            getNearbyMarkers(/*dummyMarkerData()*/listaLocales, location,
+                            getNearbyMarkers(listaLocales, location,
                                     Float.parseFloat(String.valueOf(
                                             getSeekBarRoundedValue(selectorRadio.getProgress()))));
                         }
@@ -194,17 +200,19 @@ public class MapsFragment extends Fragment {
         for (Establishment establishment : establishments) {
             float[] result = new float[1];
 
-            Location.distanceBetween(
-                    searchLocation.getLatitude(), searchLocation.getLongitude(),
-                    establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude(), result);
-            //  El radio viene dado en KMs el result es en m, por lo que se convierte a KMs
-            if(result[0]<=radius*1000){
-                Marker marker = googleMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude()))
-                        .title(establishment.getNombre())
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                        //.snippet("Precio medio: " + establishment.getPrecio() + "€ / Valoración: " + establishment.getPuntuacion()));
-                marker.setTag(establishment.getUserId());
+            if(establishment.getPosicion() != null && searchLocation != null){
+                Location.distanceBetween(
+                        searchLocation.getLatitude(), searchLocation.getLongitude(),
+                        establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude(), result);
+                //  El radio viene dado en KMs el result es en m, por lo que se convierte a KMs
+                if(result[0]<=radius*1000){
+                    Marker marker = googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(establishment.getPosicion().getLatitude(), establishment.getPosicion().getLongitude()))
+                            .title(establishment.getNombre())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    //.snippet("Precio medio: " + establishment.getPrecio() + "€ / Valoración: " + establishment.getPuntuacion()));
+                    marker.setTag(establishment.getUserId());
+                }
             }
         }
     }

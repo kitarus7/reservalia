@@ -10,6 +10,7 @@
         <entry key="..\:/Users/oskar/AndroidStudioProjects/Reservalia/app/src/main/res/layout/activity_user_register.xml" value="0.3625" />
         <entry key="..\:/Users/oskar/AndroidStudioProjects/Reservalia/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.327" />
         <entry key="..\:/Users/oskar/AndroidStudioProjects/Reservalia/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1235" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout-w936dp/menu_item.xml" value="0.271875" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_establishment.xml" value="0.2860196665241556" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_establishment_management.xml" value="0.2975630611372381" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/activity_login.xml" value="0.3625" />
@@ -22,7 +23,7 @@
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_favoritos.xml" value="0.18541666666666667" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_gestion_locales.xml" value="0.18541666666666667" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_item.xml" value="0.33" />
-        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_item_list.xml" value="0.5" />
+        <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_item_list.xml" value="0.25" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_map.xml" value="0.3625" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_maps.xml" value="0.22" />
         <entry key="..\:/android/projects/reservalia/app/src/main/res/layout/fragment_menu.xml" value="0.2975630611372381" />

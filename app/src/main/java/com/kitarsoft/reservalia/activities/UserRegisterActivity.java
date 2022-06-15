@@ -14,6 +14,7 @@ import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.dao.UserDao;
 import com.kitarsoft.reservalia.models.User;
 import com.kitarsoft.reservalia.utils.Checker;
+import com.kitarsoft.reservalia.utils.Utils;
 
 public class UserRegisterActivity extends AppCompatActivity {
 
@@ -43,12 +44,12 @@ public class UserRegisterActivity extends AppCompatActivity {
         if(checkValidations()) {
             userDao.create(new User(
                     emailTxt.getText().toString(),
-                    passwordTxt.getText().toString(),
+                    Utils.md5(passwordTxt.getText().toString()),
                     nameTxt.getText().toString(),
                     surnameTxt.getText().toString(),
                     phoneTxt.getText().toString(),
                     ownerSwitch.isChecked()),
-                        emailTxt.getText().toString());
+                    emailTxt.getText().toString());
 
             Toast.makeText(UserRegisterActivity.this, "Usuario creado con éxito", Toast.LENGTH_LONG).show();
             emailTxt.setText("");

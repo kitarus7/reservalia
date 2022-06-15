@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,8 +24,8 @@ public class UserDao {
         DBManager.create(user, COLLECTION, documentName);
     }
 
-    public void getUser(String userId, ReadUser myCallback){
-        DBManager.getDocument(COLLECTION, userId)
+    public Task<DocumentSnapshot> getUser(String userId, ReadUser myCallback){
+        return DBManager.getDocument(COLLECTION, userId)
         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -34,11 +35,11 @@ public class UserDao {
         });
     }
 
-    public void getUsers(String userId, String queryParam, String queryFilter, ReadUsers myCallback){
+    public Task<QuerySnapshot> getUsers(String userId, String queryParam, String queryFilter, ReadUsers myCallback){
 
         List<User> results = new ArrayList();
 
-        DBManager.getCollectionTask(COLLECTION, queryParam, queryFilter)
+        return DBManager.getCollectionTask(COLLECTION, queryParam, queryFilter)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

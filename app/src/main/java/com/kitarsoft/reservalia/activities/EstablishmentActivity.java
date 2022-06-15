@@ -34,7 +34,7 @@ public class EstablishmentActivity extends AppCompatActivity {
             R.drawable.ic_menu, R.drawable.ic_dishes
     };
 
-    private final static Fragment[] menuFragments = {
+    private static Fragment[] menuFragments = {
             //new MenuFragment(), new FavoritesFragment(), new ProfileFragment(), new BookFragment()
             new MenuFragment(), new BookFragment()
     };
@@ -57,12 +57,37 @@ public class EstablishmentActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        for(int i=0;i<menuFragments.length;i++){
-            menuFragments[i] = null;
-        }
+    public void onStop() {
+        super.onStop();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        for(int i=0;i<menuFragments.length;i++){
+//            menuFragments[i] = null;
+//        }
+//    }
 
     private void initElements() {
         tabLayout = findViewById(R.id.tabLayout_establishment);

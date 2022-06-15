@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.kitarsoft.reservalia.R;
 import com.kitarsoft.reservalia.dao.UserDao;
 import com.kitarsoft.reservalia.models.User;
@@ -45,22 +47,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(){
-//        //      SALTARSE EL LOGING
-//        Toast.makeText(LoginActivity.this, "Usuario correcto", Toast.LENGTH_SHORT).show();
-//        Intent mainClassIntent = new Intent(LoginActivity.this, MainActivity.class);
-//        mainClassIntent.putExtra("loggedUser", userTxt.getText().toString());
-//        startActivity(mainClassIntent);
-//        ///////////////////////////////////////////////////////////////////////////////////////////
+        userDao.getUser(userTxt.getText().toString().toLowerCase(), user -> {
+            if (user != null) {
+                String encriptedInputUser = Utils.md5(passwordTxt.getText().toString());
+                String encriptedDBUser = user.getContrasenia();
 
-        userDao.getUser(userTxt.getText().toString(), user -> {
-            if(userTxt.getText().toString().equals(user.getCorreo().toString()) && passwordTxt.getText().toString().equals(user.getContrasenia().toString())){
-                Toast.makeText(LoginActivity.this, "Usuario correcto", Toast.LENGTH_SHORT).show();
-                Intent mainClassIntent = new Intent(LoginActivity.this, MainActivity.class);
-                mainClassIntent.putExtra("userId", user.getCorreo().toString());
-                startActivity(mainClassIntent);
+                if(userTxt.getText().toString().toLowerCase().equals(user.getCorreo().toLowerCase()) &&
+                        encriptedInputUser.equals(encriptedDBUser)){
+                    Toast.makeText(LoginActivity.this, "Usuario correcto", Toast.LENGTH_SHORT).show();
+                    Intent mainClassIntent = new Intent(LoginActivity.this, MainActivity.class);
+                    mainClassIntent.putExtra("userId", user.getCorreo().toString());
+                    startActivity(mainClassIntent);
+                }else{
+                    Toast.makeText(LoginActivity.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
+                    passwordTxt.setText("");
+                }
             }else{
-                Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecto", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Usuario incorrecto", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 }

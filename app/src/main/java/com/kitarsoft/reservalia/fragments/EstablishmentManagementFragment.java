@@ -56,6 +56,7 @@ public class EstablishmentManagementFragment extends Fragment {
     private ImageButton btnAddPlace, btnDelPlace, btnUpdPlace, btnAddTable, btnDelTable, btnUpdTable;
     private TextView txtNombreLocal, txtTelefonoLocal, txtPosicionLocal, txtPuntuacionLocal, txtPrecioLocal;
     private EditText txtNumMesa, txtTamanioMesa;
+    private CheckBox chbModificarPosicion;
     private ConstraintLayout formMesas;
     private CheckBox chbTerraza;
 
@@ -79,6 +80,7 @@ public class EstablishmentManagementFragment extends Fragment {
         if (getArguments() != null) {
             userId = getArguments().getString(USER_ID);
         }
+        getCurrentLocation();
     }
 
     @Override
@@ -114,6 +116,7 @@ public class EstablishmentManagementFragment extends Fragment {
 
         btnLocation = (Button) view.findViewById(R.id.btnLocalUbicacion);
         btnLocation.setOnClickListener(view1 -> getCurrentLocation());
+        chbModificarPosicion = (CheckBox) view.findViewById(R.id.chbCambiarUbicacion);
         btnAddPlace = (ImageButton) view.findViewById(R.id.btnAddLocal);
         btnAddPlace.setOnClickListener(view1 -> createLocal());
         btnDelPlace = (ImageButton) view.findViewById(R.id.btnDelLocal);
@@ -124,8 +127,6 @@ public class EstablishmentManagementFragment extends Fragment {
         txtNombreLocal = (TextView) view.findViewById(R.id.txtNombreLocal);
         txtTelefonoLocal = (TextView) view.findViewById(R.id.txtTelefonoLocal);
         txtPosicionLocal = (TextView) view.findViewById(R.id.txtPosicionLocal);
-        txtPuntuacionLocal = (TextView) view.findViewById(R.id.txtPuntuacionLocal);
-        txtPrecioLocal = (TextView) view.findViewById(R.id.txtPrecioLocal);
 
         formMesas = (ConstraintLayout) view.findViewById(R.id.formMesasManagement);
         txtTamanioMesa = (EditText) view.findViewById(R.id.txtTamanioMesa);
@@ -158,9 +159,9 @@ public class EstablishmentManagementFragment extends Fragment {
                     public void onSuccess(Location location) {
                         if (location != null) {
                             position = new LatLng(location.getLatitude(), location.getLongitude());
-                            txtPosicionLocal.setText(
-                                    "Lat: " + position.latitude + "\nLng: " + position.longitude
-                            );
+//                            txtPosicionLocal.setText(
+//                                    "Lat: " + position.latitude + " / Lng: " + position.longitude
+//                            );
                         }
                     }
                 });
@@ -171,31 +172,40 @@ public class EstablishmentManagementFragment extends Fragment {
         newEstablishment.setUserId(userId);
         newEstablishment.setNombre(txtNombreLocal.getText().toString());
         newEstablishment.setTelefono(txtTelefonoLocal.getText().toString());
-        newEstablishment.setPrecio(Float.parseFloat(txtPrecioLocal.getText().toString()));
-        newEstablishment.setPuntuacion(Float.parseFloat(txtPuntuacionLocal.getText().toString()));
+//        newEstablishment.setPrecio(Float.parseFloat(txtPrecioLocal.getText().toString()));
+//        newEstablishment.setPuntuacion(Float.parseFloat(txtPuntuacionLocal.getText().toString()));
 
-        if(position != null){
+        //  Modificamos la posición actual si se requiere
+        if(chbModificarPosicion.isChecked() && position != null){
             newEstablishment.setPosicion(new GeoPoint(position.latitude, position.longitude));
+        }
+        if(!chbModificarPosicion.isChecked() && txtPosicionLocal.getText().toString().equals("SIN UBICACIÓN")){
+            newEstablishment.setPosicion(new GeoPoint(0, 0));
         }
 
         //if(checkValidations()) {
             establishmentDao.create(newEstablishment, userId);
             Toast.makeText(getActivity(), "Local creado con éxito", Toast.LENGTH_LONG).show();
             chargedDataMode(MODE_ESTABLISHMENT);
+            readLocal();
 //        }else{
 //            Toast.makeText(UserRegisterActivity.this, "Por favor revise e introduzca todos los datos de manera correcta", Toast.LENGTH_LONG).show();
 //        }
     }
 
+    @SuppressLint("ResourceAsColor")
     private void readLocal(){
         establishmentDao.getEstablishment(userId, result->{
             if(result!=null){
                 txtNombreLocal.setText(result.getNombre());
                 txtTelefonoLocal.setText(result.getTelefono());
-                txtPosicionLocal.setText(
-                        "Lat: " + result.getPosicion().getLatitude() +
-                                "\nLng: " + result.getPosicion().getLongitude()
-                );
+                if(result.getPosicion() != null){
+                    txtPosicionLocal.setText(
+                            "Lat: " + result.getPosicion().getLatitude() +
+                                    "\nLng: " + result.getPosicion().getLongitude());
+                }else{
+                    txtPosicionLocal.setText("SIN UBICACIÓN");
+                }
                 readMesas();
                 chargedDataMode(MODE_ESTABLISHMENT);
             }else{
@@ -220,8 +230,8 @@ public class EstablishmentManagementFragment extends Fragment {
         txtNombreLocal.setText("");
         txtTelefonoLocal.setText("");
         txtPosicionLocal.setText("");
-        txtPrecioLocal.setText("0.0");
-        txtPuntuacionLocal.setText("0.0");
+//        txtPrecioLocal.setText("0.0");
+//        txtPuntuacionLocal.setText("0.0");
     }
 
     /**
